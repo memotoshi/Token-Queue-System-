@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="konradotwinowskiapp.service.MainActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
+
+    <Button
+        android:id="@+id/StopButton"
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        android:layout_column="0"
+        android:layout_row="0"
+        android:text="Stop Service"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="325dp"
+        android:layout_marginLeft="62dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="62dp"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginStart="62dp"
+        android:layout_marginEnd="62dp"
+        tools:layout_constraintLeft_creator="1" />
+
+    <Button
+        android:id="@+id/StartButton"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:text="Start Service"
+        android:layout_marginLeft="60dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="60dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintHorizontal_bias="0.504"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        tools:layout_constraintLeft_creator="1" />
+
+</android.support.constraint.ConstraintLayout>
