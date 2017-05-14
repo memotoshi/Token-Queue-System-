@@ -1,0 +1,10 @@
+cd /mnt/f
+git status
+git add .  -- wszystkie zmiany
+git add kasjer plik
+git commit -m "tresc wiadomosci"
+git push
+
+
+
+git pull - sciaganie z gita.
