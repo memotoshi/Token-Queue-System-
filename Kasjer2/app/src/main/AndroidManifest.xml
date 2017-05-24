@@ -17,16 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SecondActivity" />
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="konradotwinowskiapp.kasjer.MainActivity" />
-
-        </activity>
-
+        <activity android:name=".OptionsActivity"></activity>
     </application>
 
 </manifest>

@@ -5,6 +5,6 @@ git add kasjer plik
 git commit -m "tresc wiadomosci"
 git push
 
-
+git commit -a -m "usuwanie"
 
 git pull - sciaganie z gita.
