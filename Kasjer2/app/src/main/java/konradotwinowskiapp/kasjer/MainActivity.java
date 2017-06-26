@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         String IP = this.sharedPref.getString("IP", "");
 
-        stringRequest = new StringRequest(Request.Method.GET, "http://" + IP + "/open/" + targetName, new Response.Listener<String>() {
+        stringRequest = new StringRequest(Request.Method.POST, "http://" + IP + "/open/" + targetName, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 

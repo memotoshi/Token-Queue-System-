@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
                 startService(new Intent(getBaseContext(), MyServices.class));
                 StartButton.setEnabled(false);
                 StopButton.setEnabled(true);
+                Intent intent = new Intent(MainActivity.this, ViewActivity.class);
+                startActivity(intent);
 
             }
         });

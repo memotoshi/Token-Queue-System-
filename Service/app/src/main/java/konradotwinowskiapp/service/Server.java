@@ -25,7 +25,7 @@ public class Server extends NanoHTTPD {
         super(8080);
     }
 
-
+    int ppl = 0;
 
 
     static String getLocalIpAddress() {
@@ -47,7 +47,7 @@ public class Server extends NanoHTTPD {
 
     @Override
     public Response serve(IHTTPSession session) {
-        Log.e("Server", "Gor request!!!!!!!!!!!!!!!!!!");
+        Log.e("Server", "Got request!!!!!!!!!!!!!!!!!!");
 //        String msg = "<html><body><h1>Hello server</h1>\n";
 //        Map<String, String> parms = session.getParms();
 //        if (parms.get("username") == null) {
@@ -69,8 +69,12 @@ public class Server extends NanoHTTPD {
                 Random gen = new Random();
                 int number = gen.nextInt(99) + 1;
                 return newFixedLengthResponse(String.valueOf(number));
-
             }
+        }
+
+        if (arr[1].equals("add")) {
+            ppl = ppl + 1;
+            return newFixedLengthResponse(String.valueOf(ppl));
         }
 
         return newFixedLengthResponse(Response.Status.NOT_FOUND, NanoHTTPD.MIME_PLAINTEXT, "Error 404, file not found.");
