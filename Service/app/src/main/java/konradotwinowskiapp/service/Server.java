@@ -1,5 +1,7 @@
 package konradotwinowskiapp.service;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,9 +25,13 @@ import fi.iki.elonen.NanoHTTPD;
 public class Server extends NanoHTTPD {
     public Server() throws IOException  {
         super(8080);
+
     }
 
     int ppl = 0;
+    public String kasa;
+
+
 
 
     static String getLocalIpAddress() {
@@ -56,14 +62,19 @@ public class Server extends NanoHTTPD {
 //            msg += "<p>Hello, " + parms.get("username") + "!</p>";
 //        }
 //        return newFixedLengthResponse(msg + "</body></html>\n");
+
+
+
         String uri = session.getUri(); // "/open/5"
-        String[] arr = uri.split("/"); // ["","open","5"]
+        String[] arr; // ["","open","5"]
+        arr = uri.split("/");
         Log.e("Server", Arrays.toString(arr));
         int arrayLength = Array.getLength(arr);
 
         if (arrayLength > 2 && arrayLength < 4) { // arrayLength = 3
             if (arr[1].equals("open") || arr[1].equals("close")) {
                 //if (Arrays.asList(arr).contains("open")){
+                kasa = arr[2];
                 return newFixedLengthResponse(arr[2]);
             } else if (arr[1].equals("next")) {
                 Random gen = new Random();
@@ -80,6 +91,10 @@ public class Server extends NanoHTTPD {
         return newFixedLengthResponse(Response.Status.NOT_FOUND, NanoHTTPD.MIME_PLAINTEXT, "Error 404, file not found.");
         //return newFixedLengthResponse(uri);
 }
+
+
+
+
 
 
 }

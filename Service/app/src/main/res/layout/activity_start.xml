@@ -23,11 +23,11 @@
         android:id="@+id/RestartButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
         android:layout_marginTop="92dp"
         android:text="Restart"
         app:layout_constraintLeft_toLeftOf="@+id/StartButton"
         app:layout_constraintTop_toBottomOf="@+id/StartButton"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintTop_creator="1" />
+
 </android.support.constraint.ConstraintLayout>
