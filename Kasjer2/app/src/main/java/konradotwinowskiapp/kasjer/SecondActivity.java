@@ -97,7 +97,7 @@ public class SecondActivity extends AppCompatActivity {
         String getName = getIntent().getStringExtra("Kasa");
         String IP = this.sharedPref.getString("IP", "");
 
-        stringRequest = new StringRequest(Request.Method.GET, "http://" + IP + "/next/" + getName, new Response.Listener<String>() {
+        stringRequest = new StringRequest(Request.Method.GET, "http://" + IP + "/close/" + getName, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 

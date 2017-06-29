@@ -10,7 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ViewActivity extends AppCompatActivity {
 
     private RequestQueue mRequestQueue;
@@ -28,17 +33,20 @@ public class ViewActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
     private static final String TAG = MainActivity.class.getName();
 
-    Server server;
-    Context context = this;
-    DatabaseHelper myDb;
-    SQLiteDatabase sqLiteDatabase;
-    Cursor cursor;
-
+    //Server server;
+    //Context context = this;
+    //DatabaseHelper myDb;
+    //String Kasa = (server.cashh).toString();
     TextView QueueView;
     TextView KasaView;
     Button testButton;
     Button DbButton;
-    Button CheckButton;
+    ListView listView;
+
+    ArrayAdapter<String> adapter;
+    List<String> list = new ArrayList<String>();
+
+
 
 
 
@@ -47,13 +55,15 @@ public class ViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
-        myDb = new DatabaseHelper(this);
+        //myDb = new DatabaseHelper(this);
 
         QueueView = (TextView) findViewById(R.id.QueueView);
         testButton = (Button) findViewById(R.id.testButton);
         DbButton = (Button) findViewById(R.id.DbButton);
         KasaView = (TextView) findViewById(R.id.KasaView);
-        CheckButton = (Button) findViewById(R.id.CheckButton);
+        listView = (ListView) findViewById(R.id.listView);
+
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
 
         final Handler ha=new Handler();
         ha.postDelayed(new Runnable() {
@@ -75,38 +85,40 @@ public class ViewActivity extends AppCompatActivity {
             }
         });
 
-        CheckButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AddKasa();
-            }
-        });
 
         DbButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                myDb = new DatabaseHelper(getApplicationContext());
-//                sqLiteDatabase = myDb.getReadableDatabase();
-//                cursor = myDb.getAllData(sqLiteDatabase);
-//                if(cursor.moveToFirst()) {
-//                    do {
-//                        String kasa;
-//                        kasa = cursor.getString(0);
-//                        DataProvider dataProvider = new DataProvider(kasa);
-//                    }while (cursor.moveToNext());
+                String opencash = Server.openCash;
+                String closecash = Server.closeCash;
+                if(opencash.equals("NotData")){
+                    KasaView.setText(("Not data found"));
+                }
+                else {
+                    if(list.contains(opencash)) {
+                        listView.setAdapter(adapter);
+                        KasaView.setText(list.toString());
+                    }
+                    else {
+                        list.add(opencash);
+                        listView.setAdapter(adapter);
+                        KasaView.setText(list.toString());
+                        Server.openCash = "NotData";
+                    }
 
-                Cursor res = myDb.getAllData();
-                if(res.getCount() == 0) {
-                    showMessage("Error", "Not data found");
-                    return;
                 }
-                StringBuffer buffer = new StringBuffer();
-                while(res.moveToNext()) {
-                    //buffer.append("Id :" + res.getString(0) + "\n");
-                    buffer.append("Kasa :" + res.getString(0) + "\n");
-                    //buffer.append("CurrentNumber :" + res.getString(2) + "\n");
+                if(closecash.equals("NotData")){
+                    KasaView.setText(("Not data found"));
                 }
-                showMessage("Data", buffer.toString());
+                else {
+                    if(list.contains(closecash)) {
+                        list.remove(closecash);
+                        Server.closeCash = "NotData";
+                        listView.setAdapter(adapter);
+                        KasaView.setText(list.toString());
+                    }
+                }
+
             }
         });
     }
@@ -139,26 +151,19 @@ public class ViewActivity extends AppCompatActivity {
         mRequestQueue.add(stringRequest);
     }
 
-    public void showMessage(String title, String Message){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(Message);
-        builder.show();
-    }
 
 
-    private void AddKasa(){
-
-        //String kasa = server.kasa.toString();
-        String kasa = QueueView.getText().toString();
-        myDb = new DatabaseHelper(context);
-        sqLiteDatabase = myDb.getWritableDatabase();
-        myDb.insertData(kasa, sqLiteDatabase);
-        myDb.close();
-        Toast.makeText(getBaseContext(), "Data saved", Toast.LENGTH_LONG).show();
-        myDb.close();
-
-    }
+//    private void AddKasa(){
+//
+//        //String kasa = server.kasa.toString();
+//        String kasa = QueueView.getText().toString();
+//        myDb = new DatabaseHelper(context);
+//        sqLiteDatabase = myDb.getWritableDatabase();
+//        myDb.insertData(kasa, sqLiteDatabase);
+//        myDb.close();
+//        Toast.makeText(getBaseContext(), "Data saved", Toast.LENGTH_LONG).show();
+//        myDb.close();
+//
+//    }
 }
 

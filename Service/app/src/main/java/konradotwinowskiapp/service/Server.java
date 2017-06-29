@@ -1,6 +1,7 @@
 package konradotwinowskiapp.service;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.Toast;
@@ -29,7 +30,8 @@ public class Server extends NanoHTTPD {
     }
 
     int ppl = 0;
-    public String kasa;
+    public static String openCash = "NotData";
+    public static String closeCash = "NotData";
 
 
 
@@ -72,9 +74,12 @@ public class Server extends NanoHTTPD {
         int arrayLength = Array.getLength(arr);
 
         if (arrayLength > 2 && arrayLength < 4) { // arrayLength = 3
-            if (arr[1].equals("open") || arr[1].equals("close")) {
+            if (arr[1].equals("open")) {
                 //if (Arrays.asList(arr).contains("open")){
-                kasa = arr[2];
+                openCash = arr[2];
+                return newFixedLengthResponse(arr[2]);
+            } else if (arr[1].equals("close")) {
+                closeCash = arr[2];
                 return newFixedLengthResponse(arr[2]);
             } else if (arr[1].equals("next")) {
                 Random gen = new Random();
