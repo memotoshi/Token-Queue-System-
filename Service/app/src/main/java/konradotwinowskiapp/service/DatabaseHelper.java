@@ -6,62 +6,59 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.TextView;
 
 /**
- * Created by Konrad on 2017-06-26.
+ * Created by Konrad on 2017-07-07.
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "Cash.db";
-    private static final int DATABASE_VERSION = 1;
-    private static final String CREATE_QUERY = "CREATE TABLE " + KasaDb.NewKasaInfo.KASA_NAME + "TEXT,";
-//    public static final String TABLE_NAME = "cash_table";
-//    public static final String COL_1 = "ID";
-//    public static final String COL_2 = "KASA";
-//    public static final String COL_3 = "CURRENTNUMBER";
+    private static final String TAG = "DatabaseHelper";
+
+    private static final String TABLE_NAME = "cash_table";
+    private static final String COL1 = "ID";
+    private static final String COL2 = "namecash";
+    private static final String COL3 = "number";
+
+
 
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        Log.e("DATABASE OPERATIONS", "Database created!!!!!!!!!!!");
-        SQLiteDatabase db = this.getWritableDatabase();
+        super(context, TABLE_NAME, null, 1);
     }
 
-    @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_QUERY);
-        Log.e("DATABASE OPERATIONS", "Table created!!!!!!!!!!!!");
+        String createTable = "CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " + COL2 + " TEXT, " + COL3 + " TEXT)";
+        db.execSQL(createTable);
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+        db.execSQL("DROP IF TABLE EXISTS " + TABLE_NAME);
+        onCreate(db);
     }
 
-
-    public void insertData (String kasa, SQLiteDatabase db) { //String currentnumber
-        //SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(KasaDb.NewKasaInfo.KASA_NAME, kasa);
-        db.insert(KasaDb.NewKasaInfo.TABLE_NAME, null, contentValues);
-        Log.e("DATABASE OPERATIONS", "Row inserted!!!!!!!!!!!!");
-        //contentValues.put(COL_3, currentnumber);
-//        long result = db.insert(TABLE_NAME, null, contentValues);
-//        if(result == -1)
-//            return false;
-//        else
-//            return true;
-    }
-
-//    public Cursor getAllData(SQLiteDatabase db) {
-//        Cursor cursor;
-//        String[] projections = {KasaDb.NewKasaInfo.KASA_NAME};
-//        cursor = db.query(KasaDb.NewKasaInfo.TABLE_NAME, projections, null, null, null, null, null);
-//        return cursor;
-//    }
-    public Cursor getAllData() {
+    public boolean addData(String namecash, String number) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("select * from " + KasaDb.NewKasaInfo.TABLE_NAME, null);
-        return res;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL2, namecash);
+        contentValues.put(COL3, number);
+
+        Log.d(TAG, "addData: Adding " + namecash + number + " to " + TABLE_NAME);
+        long result = db.insert(TABLE_NAME, null, contentValues);
+
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
     }
+
+    public Cursor getData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME;
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+
 }
