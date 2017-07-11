@@ -48,8 +48,9 @@ public class ViewActivity extends AppCompatActivity {
     TextView InfoView, QueueView, KasaView, NumberView, MsgView;
     Button testButton, DbButton, SMSButton;
 
-    public static int nextNumber = 0;
+    public static int nextNumber = 10;
     public static int queueCount = 0;
+    public static List<String> lista = new ArrayList<>();
 
 //    private BroadcastReceiver intentReceiver = new BroadcastReceiver() {
 //        @Override
@@ -80,6 +81,7 @@ public class ViewActivity extends AppCompatActivity {
         SMSButton = (Button) findViewById(R.id.SMSButton);
 
         controller = new DB_Controller(this);
+
 
         final Handler ha = new Handler();
         ha.postDelayed(new Runnable() {
@@ -199,6 +201,7 @@ public class ViewActivity extends AppCompatActivity {
                     Server.nextCash = "NotData";
                     Server.openCash = "NotData";
                     queueCount--;
+                    lista.remove(0);
                     break;
                 }
 

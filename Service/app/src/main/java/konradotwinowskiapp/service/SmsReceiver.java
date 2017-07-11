@@ -28,8 +28,9 @@ public class SmsReceiver extends BroadcastReceiver {
                 }
                 SmsManager sms = SmsManager.getDefault();
                 if (body.contains("kolejka")) {
-                    ViewActivity.queueCount++;
-                    ViewActivity.nextNumber++;
+                    ViewActivity.queueCount++; //liczba osob w kolejce
+                    ViewActivity.nextNumber++; //wyslanie numerka do klienta
+                    ViewActivity.lista.add(String.valueOf(ViewActivity.nextNumber)); //wyswietlenie numerka klienta
                     sms.sendTextMessage(number, null, "Your number is " + String.valueOf(ViewActivity.nextNumber), null, null);
                 }
             }
