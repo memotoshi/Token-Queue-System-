@@ -35,6 +35,7 @@ public class Server extends NanoHTTPD {
     public static String numberCash = "NotData";
     public static String nextCash = "NotData";
     public static int number;
+    public static int numerek = 0;
 
 
 
@@ -85,11 +86,13 @@ public class Server extends NanoHTTPD {
                 closeCash = arr[2];
                 return newFixedLengthResponse(arr[2]);
             } else if (arr[1].equals("next")) {
+                //number = ViewActivity.nextNumber;
                 nextCash = arr[2];
-                Random gen = new Random();
-                number = gen.nextInt(99) + 1;
+                //Random gen = new Random();
+                //number = gen.nextInt(99) + 1;
+                numerek++;
                 numberCash = String.valueOf(number);
-                return newFixedLengthResponse(String.valueOf(number));
+                return newFixedLengthResponse(String.valueOf(numerek));
             }
         }
 

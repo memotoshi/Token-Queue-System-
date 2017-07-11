@@ -66,11 +66,14 @@ public class DB_Controller extends SQLiteOpenHelper {
         this.getWritableDatabase().execSQL("UPDATE CASHES SET NUMBERNAME='" + new_numbername + "' WHERE CASHNAME='" + old_numbername + "'");
     }
 
-    public void list_all_cashes(TextView textView){
+    public void list_all_cashes(TextView textView, TextView textView2){
         Cursor cursor = this.getReadableDatabase().rawQuery("SELECT * FROM CASHES", null);
         textView.setText("");
+        textView2.setText("");
         while (cursor.moveToNext()){
-            textView.append(cursor.getString(1) + " " + cursor.getString(2) + "\n");
+            //textView.append(cursor.getString(1) + " " + cursor.getString(2) + "\n");
+            textView.append(cursor.getString(1) + " " + "\n");
+            textView2.append(cursor.getString(2) + " " + "\n");
         }
     }
 
