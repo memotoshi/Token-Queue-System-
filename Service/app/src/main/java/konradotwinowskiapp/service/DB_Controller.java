@@ -3,6 +3,7 @@ package konradotwinowskiapp.service;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -84,5 +85,12 @@ public class DB_Controller extends SQLiteOpenHelper {
         db.close();
         //db.delete(TABLE_NAME, null, null);
         //this.getWritableDatabase().delete(TABLE_NAME, COL1, COL2, null);
+    }
+
+    public long getCount() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        long cnt  = DatabaseUtils.queryNumEntries(db, "CASHES");
+        db.close();
+        return cnt;
     }
 }

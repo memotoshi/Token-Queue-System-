@@ -93,6 +93,7 @@ public class Server extends NanoHTTPD {
                 //numerek++;
                 //numberCash = String.valueOf(number);
                 numberCash = (String)ViewActivity.lista.get(0);
+                //SmsReceiver.sms.sendTextMessage(DB_Controller_sms., null, "Juz jestes w kolejce!", null, null);
                 return newFixedLengthResponse(String.valueOf(numberCash));
             }
         }

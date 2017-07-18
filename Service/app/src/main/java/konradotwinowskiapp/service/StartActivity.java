@@ -12,6 +12,7 @@ public class StartActivity extends AppCompatActivity {
 
 
     DB_Controller controller;
+    DB_Controller_sms controller_sms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,7 @@ public class StartActivity extends AppCompatActivity {
         Button RestartButton = (Button) findViewById(R.id.RestartButton);
 
         controller = new DB_Controller(this);
+        controller_sms = new DB_Controller_sms(this);
 
         StartButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +38,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 controller.delete_all();
+                controller_sms.delete_all();
                 Intent intent = new Intent(StartActivity.this, MainActivity.class);
                 startActivity(intent);
             }

@@ -42,6 +42,7 @@ public class ViewActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
     private static final String TAG = MainActivity.class.getName();
 
+    DB_Controller_sms controller_sms;
     DB_Controller controller;
     IntentFilter intentFilter;
 
@@ -51,6 +52,11 @@ public class ViewActivity extends AppCompatActivity {
     public static int nextNumber = 10;
     public static int queueCount = 0;
     public static List<String> lista = new ArrayList<>();
+
+    public static long numberOfCash;
+
+
+    //if (numberOfCash/queueCount) = 1 : send sms ("Niedlugo Twoja kolej");
 
 //    private BroadcastReceiver intentReceiver = new BroadcastReceiver() {
 //        @Override
@@ -81,7 +87,8 @@ public class ViewActivity extends AppCompatActivity {
         SMSButton = (Button) findViewById(R.id.SMSButton);
 
         controller = new DB_Controller(this);
-
+        controller_sms = new DB_Controller_sms(this);
+        numberOfCash = controller.getCount();
 
         final Handler ha = new Handler();
         ha.postDelayed(new Runnable() {
@@ -172,15 +179,16 @@ public class ViewActivity extends AppCompatActivity {
 
 
     private void addCash() {
-
+//open
         switch (Server.openCash) {
             case ("NotData"):
                 InfoView.setText("Nothing");
                 break;
             default:
                 try {
-                    Server.number = 0;
                     controller.insert_cash(Server.openCash, String.valueOf(Server.number));
+                    Server.number = 0;
+                    //numberOfCash++;
                     Server.openCash = "NotData";
                 } catch (SQLiteException e) {
                     InfoView.setText("Already exist");
@@ -188,14 +196,15 @@ public class ViewActivity extends AppCompatActivity {
                 }
                 break;
         }
-
+//next
         switch (Server.numberCash) {
             case ("NotData"):
                 InfoView.setText("No number");
                 break;
             default:
-                if (queueCount>0) {
+                if (queueCount > 0) {
                     //Server.ppl = (Server.ppl - 1);
+                    controller_sms.delete_sms(Server.numberCash);
                     controller.update_cash(Server.nextCash, Server.numberCash);
                     Server.numberCash = "NotData";
                     Server.nextCash = "NotData";
@@ -206,7 +215,7 @@ public class ViewActivity extends AppCompatActivity {
                 }
 
         }
-
+//close
         switch (Server.closeCash) {
             case ("NotData"):
                 InfoView.setText("Nothing123");
@@ -214,9 +223,27 @@ public class ViewActivity extends AppCompatActivity {
             default:
                 controller.delete_cash(Server.closeCash);
                 Server.closeCash = "NotData";
+                //numberOfCash--;
                 break;
         }
         controller.list_all_cashes(KasaView, NumberView);
+
+//        switch (SmsReceiver.sms_number) {
+//            case ("NotData"):
+//                InfoView.setText("No sms");
+//                break;
+//            default:
+//                try {
+//                    controller_sms.insert_sms(SmsReceiver.sms_telephone, SmsReceiver.sms_number);
+//                    SmsReceiver.sms_telephone = "NotData";
+//                    SmsReceiver.sms_number = "NotData";
+//                } catch (SQLiteException e) {
+//                    InfoView.setText("Already exist");
+//                    //Toast.makeText(this, "ALREADY EXISTS", Toast.LENGTH_LONG).show();
+//                }
+
+
+
     }
 
 }
